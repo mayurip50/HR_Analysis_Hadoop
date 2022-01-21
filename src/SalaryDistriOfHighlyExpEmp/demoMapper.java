@@ -1,0 +1,25 @@
+package SalaryDistriOfHighlyExpEmp;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class demoMapper extends Mapper<Object,Text,Text,MultipleVariableWritable>{
+	
+	public void map(Object key,Text value,Context context) throws IOException, InterruptedException {
+		
+		String[] tokens=value.toString().split(",");
+		
+		String dept=tokens[8].trim();
+		String salary=tokens[9].trim();
+			
+		Integer exp=Integer.parseInt(tokens[4].trim());	
+MultipleVariableWritable composite=new MultipleVariableWritable(exp,salary);
+context.write(new Text(dept), composite);
+		
+		
+	}
+
+}
